@@ -10,6 +10,7 @@ const path                  = require('path');
 const join                  = path.join;
 const HtmlWebpackPlugin     = require('html-webpack-plugin');
 const BrowserSyncPlugin     = require('browser-sync-webpack-plugin');
+const ZopfliPlugin          = require('zopfli-webpack-plugin');
 const ExtractCssChunks      = require('extract-css-chunks-webpack-plugin');
 const autoprefixer          = require('autoprefixer');
 const cssMqpacker           = require('css-mqpacker');
@@ -241,6 +242,14 @@ module.exports = {
 
         new HtmlWebpackPlugin({
             template: 'index.html'
+        }),
+
+        new ZopfliPlugin({
+            asset: '[path].gz[query]',
+            algorithm: 'zopfli',
+            test: /\.js$|\.css$/,
+            threshold: 10240,
+            minRatio: 0.8
         })
     ]
 };
