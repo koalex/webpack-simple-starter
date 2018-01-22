@@ -6,7 +6,6 @@
 
 global.__DEV__              = process.env.NODE_ENV === 'development';
 const webpack               = require('webpack');
-const fs                    = require('fs');
 const path                  = require('path');
 const join                  = path.join;
 const HtmlWebpackPlugin     = require('html-webpack-plugin');
