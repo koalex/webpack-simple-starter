@@ -24,7 +24,7 @@ module.exports = {
     },
     output: {
         path: path.resolve(__dirname, './dist'),
-        publicPath: __DEV__ ? './' : '/',
+        publicPath: __DEV__ ? '/' : './',
         filename: '[name].js',
         chunkFilename: '[id].js'
     },
