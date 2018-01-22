@@ -21,8 +21,8 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, './dist'),
         publicPath: __DEV__ ? '/' : './',
-        filename: '[name].js',
-        chunkFilename: '[id].js'
+        filename: __DEV__ ? '[name].js' : '[hash].js',
+        chunkFilename: __DEV__ ? '[id].js' : '[id].[chunkhash:8].js'
     },
     watchOptions: {
         poll: true,
@@ -227,7 +227,7 @@ module.exports = {
         ),
 
         new ExtractCssChunks({
-            filename: '[name].css'
+            filename: __DEV__ ? '[name].css' : '[contenthash:8].css'
         }),
 
         new webpack.DefinePlugin({

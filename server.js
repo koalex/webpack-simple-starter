@@ -1,6 +1,6 @@
 const http   = require('http');
 const static = require('node-static');
-const file   = new static.Server('./dist', { gzip: true, cache: 0 });
+const file   = new static.Server('./dist', { gzip: true });
 
 http.createServer((request, response) => {
 	request.addListener('end', () => {
