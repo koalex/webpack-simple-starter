@@ -4,7 +4,8 @@
 
 'use strict';
 
-global.__DEV__              = process.env.NODE_ENV == 'development';
+// global.__DEV__              = process.env.NODE_ENV == 'development';
+global.__DEV__              = true;
 const webpack               = require('webpack');
 const path                  = require('path');
 const join                  = path.join;
