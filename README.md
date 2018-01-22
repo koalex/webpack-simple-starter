@@ -16,3 +16,9 @@ npm run dev
 ```bash
 npm run build
 ```
+
+##### Сборка для production и запуск статического сервера на порту :8080
+
+```bash
+npm start
+```

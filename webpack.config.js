@@ -1,34 +1,31 @@
-/*** ✰✰✰ Konstantin Aleksandrov ✰✰✰ ***/
-
-// FIXME: file-loader v1.0 внутри url-loader глючит -> https://github.com/webpack-contrib/file-loader/issues/181 (откатился на file-loader v0.11)
-
 'use strict';
 
-// global.__DEV__              = process.env.NODE_ENV == 'development';
-global.__DEV__              = true;
-const webpack               = require('webpack');
-const path                  = require('path');
-const join                  = path.join;
-const HtmlWebpackPlugin     = require('html-webpack-plugin');
-const BrowserSyncPlugin     = require('browser-sync-webpack-plugin');
-const ExtractCssChunks      = require('extract-css-chunks-webpack-plugin');
-const autoprefixer          = require('autoprefixer');
-const cssMqpacker           = require('css-mqpacker');
+global.__DEV__           = process.env.NODE_ENV == 'development';
+const webpack            = require('webpack');
+const path               = require('path');
+const HtmlWebpackPlugin  = require('html-webpack-plugin');
+const BrowserSyncPlugin  = require('browser-sync-webpack-plugin');
+const ExtractCssChunks   = require('extract-css-chunks-webpack-plugin');
+const CompressionPlugin  = require('compression-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
+const autoprefixer       = require('autoprefixer');
+const cssMqpacker        = require('css-mqpacker');
 
 console.log('__DEV__ =', __DEV__);
 
 module.exports = {
-    context: join(process.cwd(), './src'),
+    context: path.join(process.cwd(), './src'),
     entry: {
         index: ['./scripts/index.js'] 
     },
     output: {
         path: path.resolve(__dirname, './dist'),
-        publicPath: '/',
+        publicPath: __DEV__ ? '/' : './',
         filename: '[name].js',
         chunkFilename: '[id].js'
     },
     watchOptions: {
+        poll: true,
         aggregateTimeout: 100,
         ignored: /node_modules/
     },
@@ -36,7 +33,8 @@ module.exports = {
     devServer: {
         port: 4000,
         hot: __DEV__,
-        contentBase: path.resolve(__dirname, './dist')
+        contentBase: path.join(__dirname, './src'),
+        watchContentBase: true
     },
     resolve: {
         modules: ['node_modules', 'bower_components'],
@@ -82,7 +80,6 @@ module.exports = {
                                 sourceMap: true,
                                 minimize: !__DEV__,
                                 modules: false,
-                                localIdentName: '[name]',
                                 importLoaders: 1
 
                             }
@@ -111,7 +108,6 @@ module.exports = {
                                 sourceMap: true,
                                 minimize: !__DEV__,
                                 modules: false,
-                                localIdentName: '[name]',
                                 importLoaders: 2
 
                             }
@@ -141,7 +137,6 @@ module.exports = {
                                 sourceMap: true,
                                 minimize: !__DEV__,
                                 modules: false,
-                                localIdentName: '[name]',
                                 importLoaders: 2
 
                             }
@@ -171,7 +166,6 @@ module.exports = {
                                 sourceMap: true,
                                 minimize: !__DEV__,
                                 modules: false,
-                                localIdentName: '[name]',
                                 importLoaders: 2
 
                             }
@@ -275,24 +269,22 @@ if (__DEV__) {
             }
         )
     )
-
 } else {
-    // to babel-loader
-    module.exports.module.rules[0].query.plugins.unshift(['transform-react-remove-prop-types', {
-        'mode': 'remove',
-        'removeImport': true,
-        'ignoreFilenames': ['node_modules']
-    }]);
+    module.exports.plugins.push(
+        new CleanWebpackPlugin([path.resolve(__dirname, './dist')], {
+            exclude: ['.gitkeep']
+        })
+    );
 
     module.exports.plugins.push(new webpack.HashedModuleIdsPlugin({
         hashFunction: 'sha256',
         hashDigest: 'hex',
         hashDigestLength: 20
     }));
+
     module.exports.plugins.push( // NO NEED IF -p in CLI
         new webpack.optimize.UglifyJsPlugin({
             test: /\.js$/,
-            // exclude: /common\.js/, // ебаный баг заставляет писать костыли https://github.com/webpack/webpack/issues/1079 (TODO: был в v1, скорее всего уже не актуально)
             compress: {
                 warnings: false,
                 drop_console: true,
@@ -301,4 +293,12 @@ if (__DEV__) {
         })
     );
 
+    module.exports.plugins.push(
+        new CompressionPlugin({
+            asset: '[path].gz[query]',
+            algorithm: 'gzip',
+            test: /\.js$|\.css$/,
+            minRatio: 0.8
+        })
+    );
 }
