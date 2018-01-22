@@ -54,7 +54,6 @@
     "stylus-loader": "^3.0.1",
     "url-loader": "^0.6.2",
     "webpack": "^3.10.0",
-    "webpack-dev-server": "^2.9.7",
-    "zopfli-webpack-plugin": "^0.1.0"
+    "webpack-dev-server": "^2.9.7"
   }
 }
