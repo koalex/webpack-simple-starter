@@ -21,7 +21,7 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, './dist'),
         publicPath: __DEV__ ? '/' : './',
-        filename: __DEV__ ? '[name].js' : '[hash].js',
+        filename: __DEV__ ? '[name].js' : '[hash].[name].js',
         chunkFilename: __DEV__ ? '[id].js' : '[id].[chunkhash:8].js'
     },
     watchOptions: {
@@ -236,7 +236,9 @@ module.exports = {
         }),
 
         new HtmlWebpackPlugin({
-            template: 'index.html'
+            template: 'index.html',
+            chunks: ['index'],
+            filename: 'index.html'
         })
     ]
 };
