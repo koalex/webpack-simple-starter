@@ -1,0 +1,7 @@
+dist/
+node_modules/
+bower_components/
+.idea/
+.DS_Store
+npm-debug.log
+.bash_history deleted
