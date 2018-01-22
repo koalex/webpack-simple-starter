@@ -4,7 +4,7 @@
 
 'use strict';
 
-global.__DEV__              = process.env.NODE_ENV === 'development';
+global.__DEV__              = process.env.NODE_ENV == 'development';
 const webpack               = require('webpack');
 const path                  = require('path');
 const join                  = path.join;
@@ -14,6 +14,7 @@ const ExtractCssChunks      = require('extract-css-chunks-webpack-plugin');
 const autoprefixer          = require('autoprefixer');
 const cssMqpacker           = require('css-mqpacker');
 
+console.log('__DEV__ =', __DEV__);
 
 module.exports = {
     context: join(process.cwd(), './src'),
