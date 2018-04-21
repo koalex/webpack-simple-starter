@@ -16,7 +16,8 @@ console.log('__DEV__ =', __DEV__);
 module.exports = {
     context: path.join(process.cwd(), './src'),
     entry: {
-        index: ['./scripts/index.js'] 
+        index: ['./scripts/index.js'],
+        home: ['./scripts/home.js']
     },
     output: {
         path: path.resolve(__dirname, './dist'),
@@ -239,6 +240,12 @@ module.exports = {
             template: 'index.html',
             chunks: ['index'],
             filename: 'index.html'
+        }),
+
+        new HtmlWebpackPlugin({
+            template: 'home.html',
+            chunks: ['home'],
+            filename: 'home.html'
         })
     ]
 };
