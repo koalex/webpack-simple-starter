@@ -83,12 +83,14 @@ module.exports = {
 		}),
 
         new HtmlWebpackPlugin({
-            filename: 'index.html',
-            template: 'index.html',
+            filename: path.join(__dirname, '../dist/index.html'),
+            template: path.join(__dirname, '../src/index.html'),
             minify: true,
-            // chunks: ['index'],
-			browserSync: `<script id="__bs_script__">//<![CDATA[document.write("<script async src='http://HOST:8080/browser-sync/browser-sync-client.js?v=2.24.7'><\\/script>".replace("HOST", location.hostname));//]]></script>`
+            inject: true,
+            chunks: ['runtime', 'styles', 'vendor', 'common', 'index'],
+			browserSync: process.env.NODE_ENV == 'development' ? `<script id="__bs_script__">//<![CDATA[document.write("<script async src='http://HOST:8080/browser-sync/browser-sync-client.js?v=2.24.7'><\\/script>".replace("HOST", location.hostname));//]]></script>` : ''
 		}),
+
 		new LodashModuleReplacementPlugin(/*opts*/),
 		new OptimizeCSSAssetsPlugin(),
 

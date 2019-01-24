@@ -159,26 +159,7 @@ module.exports = merge(common, {
 						}
 					},
 					{
-						loader: 'image-webpack-loader',
-						options: {
-							mozjpeg: {
-								progressive: true,
-								quality: 65
-							},
-							gifsicle: {
-								interlaced: false
-							},
-							optipng: {
-								optimizationLevel: 7
-							},
-							pngquant: {
-								quality: '65-90',
-								speed: 4
-							},
-							webp: { // the webp option will enable WEBP
-								quality: 75
-							}
-						}
+						loader: 'file-loader'
 					}
 				]
 			}
