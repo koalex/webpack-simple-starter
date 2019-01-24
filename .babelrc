@@ -1,0 +1,60 @@
+{
+  env: {
+    development: {
+      presets: [
+        ['@babel/env', {
+            targets: {
+//              esmodules: true,
+              browsers: ['last 2 versions']
+          },
+          useBuiltIns: false
+        }]
+      ],
+      plugins: [
+//        https://babeljs.io/docs/en/babel-plugin-syntax-dynamic-import
+        ['@babel/plugin-transform-runtime', {
+          corejs: false,
+          helpers: false,
+          regenerator: true,
+          useESModules: true // https://babeljs.io/docs/en/babel-plugin-transform-runtime TODO
+        }],
+        '@babel/plugin-proposal-object-rest-spread',
+        '@babel/plugin-proposal-export-default-from',
+        ['@babel/plugin-proposal-decorators', {
+          decoratorsBeforeExport: true,
+          legacy: false
+        }],
+        ['@babel/plugin-proposal-class-properties', {loose: false}],
+        'lodash'
+      ]
+    },
+    production: {
+      presets: [
+        ['@babel/env', {
+          targets: {
+            esmodules: true,
+            browsers: ['last 2 versions']
+          },
+          useBuiltIns: false
+        }],
+      ],
+      plugins: [
+        // https://babeljs.io/docs/en/babel-plugin-syntax-dynamic-import
+        ['@babel/plugin-transform-runtime', {
+          corejs: false,
+          helpers: false,
+          regenerator: true,
+          useESModules: true // https://babeljs.io/docs/en/babel-plugin-transform-runtime TODO
+        }],
+        '@babel/plugin-proposal-object-rest-spread',
+        '@babel/plugin-proposal-export-default-from',
+        ['@babel/plugin-proposal-decorators', {
+          decoratorsBeforeExport: true,
+          legacy: false
+        }],
+        ['@babel/plugin-proposal-class-properties', {loose: false}],
+        'lodash'
+      ]
+    }
+  }
+}
